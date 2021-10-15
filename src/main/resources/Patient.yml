@@ -1,0 +1,119 @@
+openapi: 3.0.0
+info:
+  title: IHIS Patients Manager
+  description: This is a sample Patients API for IHIS
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/nanisrikanthvaddi/patient/1.0.0
+  - url: https://ihis/v1
+tags:
+  - name: patientInfo
+    description: Use this API to know about the patients information
+paths:
+  /getPatientInfo/{patientid}:
+    get:
+      tags:
+        - patientid
+      summary: get  patient detais
+      description: Use this API to know about the patient information
+      operationId: getPatientInfoById
+      parameters:
+        - name: patientid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: MessageId
+          in: header
+          description: Request Message ID header
+          required: true
+          schema:
+            type: string
+        - name: requestorId
+          in: header
+          description: Requester ID header
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatientsResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    PatientInnerJSON:
+      type: object
+      properties:
+        name:
+          type: string
+        nric:
+          type: string
+        birth-date:
+          type: string
+        address:
+          type: string
+        phoneNum:
+          type: string
+    ResponseHeaderInnerJSON:
+      type: object
+      properties:
+        MessageId:
+          type: string
+        Timestamp:
+          type: string
+        requestorId:
+          type: string
+    PatientsResponse:
+      type: object
+      properties:
+        responseHeader:
+          $ref: '#/components/schemas/ResponseHeaderInnerJSON'
+        patient:
+          $ref: '#/components/schemas/PatientInnerJSON'
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          format: int32
+        message:
+          type: string

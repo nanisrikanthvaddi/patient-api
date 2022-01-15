@@ -23,6 +23,19 @@ public class PatientsResponse   {
   @JsonProperty("patient")
   private PatientInnerJSON patient;
 
+  public String getLogo() {
+    return logo;
+  }
+
+  public void setLogo(String logo) {
+    this.logo = logo;
+  }
+
+  @JsonProperty("logo")
+  private String logo;
+
+
+
   public PatientsResponse responseHeader(ResponseHeaderInnerJSON responseHeader) {
     this.responseHeader = responseHeader;
     return this;
